@@ -28,97 +28,78 @@ STEP-5: Read the characters row wise or column wise in the former order to get t
 #include <stdio.h>
 #include <string.h>
 
-void encryptRailFence(char *message, int rails, char *encrypted)
-{
-    int len = strlen(message);
-    char rail[rails][len];
-
-    memset(rail, '\n', sizeof(rail));
-
-    int row = 0, direction = 1, k = 0;
-
-    for (int i = 0; i < len; i++)
-    {
-        rail[row][i] = message[i];
-
-        row += direction;
-
-        if (row == rails - 1 || row == 0)
-            direction = -direction;
-    }
-
-    for (int i = 0; i < rails; i++)
-        for (int j = 0; j < len; j++)
-            if (rail[i][j] != '\n')
-                encrypted[k++] = rail[i][j];
-
-    encrypted[k] = '\0';
-}
-
-void decryptRailFence(char *encrypted, int rails, char *decrypted)
-{
-    int len = strlen(encrypted);
-    char rail[rails][len];
-
-    memset(rail, '\n', sizeof(rail));
-
-    int row = 0, direction = 1, k = 0;
-
-    for (int i = 0; i < len; i++)
-    {
-        rail[row][i] = '*';
-
-        row += direction;
-
-        if (row == rails - 1 || row == 0)
-            direction = -direction;
-    }
-
-    for (int i = 0; i < rails; i++)
-        for (int j = 0; j < len; j++)
-            if (rail[i][j] == '*')
-                rail[i][j] = encrypted[k++];
-
-    row = 0;
-    direction = 1;
-
-    for (int i = 0; i < len; i++)
-    {
-        decrypted[i] = rail[row][i];
-
-        row += direction;
-
-        if (row == rails - 1 || row == 0)
-            direction = -direction;
-    }
-
-    decrypted[len] = '\0';
-}
-
 int main()
 {
-    char message[100], encrypted[100], decrypted[100];
-    int rails;
+    char s[100], a[10][100], e[100], d[100];
+    int r, n, i, j, k = 0;
+    int row = 0, dir = 1;
 
-    printf("Enter a Secret Message: ");
-    scanf("%s", message);
+    printf("Enter message: ");
+    scanf("%s", s);
+    printf("Enter rails: ");
+    scanf("%d", &r);
 
-    printf("Enter number of rails: ");
-    scanf("%d", &rails);
+    n = strlen(s);
 
-    encryptRailFence(message, rails, encrypted);
+    for(i = 0; i < r; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            a[i][j] = ' ';
+        }
+    }
 
-    printf("Encrypted text: %s\n", encrypted);
+    for(i = 0; i < n; i++)
+    {
+        a[row][i] = s[i];
+        row = row + dir;
 
-    decryptRailFence(encrypted, rails, decrypted);
+        if(row == r - 1 || row == 0)
+        {
+            dir = -dir;
+        }
+    }
 
-    printf("Decrypted text: %s\n", decrypted);
+    for(i = 0; i < r; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            if(a[i][j] != ' ')
+            {
+                e[k] = a[i][j];
+                k++;
+            }
+        }
+    }
+
+    e[k] = '\0';
+    printf("Encrypted: %s\n", e);
+
+    k = 0;
+    row = 0;
+    dir = 1;
+
+    for(i = 0; i < n; i++)
+    {
+        d[i] = a[row][i];
+        row = row + dir;
+
+        if(row == r - 1 || row == 0)
+        {
+            dir = -dir;
+        }
+    }
+
+    d[n] = '\0';
+    printf("Decrypted: %s", d);
 
     return 0;
 }
 ```
 # OUTPUT
-<img width="1217" height="647" alt="image" src="https://github.com/user-attachments/assets/bc7d6861-d74f-46eb-bf1a-caa94f6f62b7" />
+
+<img width="552" height="590" alt="image" src="https://github.com/user-attachments/assets/9559928c-a1ee-4f86-93ff-661dd4d3f740" />
+
 
 
 # RESULT
